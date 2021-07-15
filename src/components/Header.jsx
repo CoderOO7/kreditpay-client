@@ -5,16 +5,10 @@ import { connect } from 'react-redux';
 import { logoutUser } from '../actions';
 
 class Header extends Component {
-  constructor(props) {
-    super(props);
-    this.handleLogoutClick = this.handleLogoutClick.bind(this);
-  }
-
-  handleLogoutClick() {
+  handleLogoutClick = () => {
     const { dispatch } = this.props;
     dispatch(logoutUser());
-    // history.push('/');
-  }
+  };
 
   render() {
     return (

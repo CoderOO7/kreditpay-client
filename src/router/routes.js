@@ -1,4 +1,5 @@
 import Dashboard from '@kreditpay/components/Dashboard';
+import CustomerLandingPage from '@kreditpay/components/CustomerLandingPage';
 import SignIn from '@kreditpay/components/SignIn';
 import SignUp from '@kreditpay/components/SignUp';
 import UserAdd from '@kreditpay/components/User/UserAdd';
@@ -27,6 +28,19 @@ export const dashboardRoutes = {
       }
     }
   },
+  client: {
+    index: {
+      exact: true,
+      redirect: true,
+      path: '/customer',
+      to: '/customer/dashboard'
+    },
+    dashboard: {
+      exact: true,
+      path: '/customer/dashboard',
+      component: CustomerLandingPage
+    }
+  },
   notFound: {
     path: '*',
     component: NotFound
@@ -36,6 +50,12 @@ export const dashboardRoutes = {
 export default {
   admin: {
     path: '/admin',
+    component: Dashboard,
+    guardFuntion: routerGuard.mustBeAuthorized,
+    redirectPath: '/'
+  },
+  customer: {
+    path: '/customer',
     component: Dashboard,
     guardFuntion: routerGuard.mustBeAuthorized,
     redirectPath: '/'

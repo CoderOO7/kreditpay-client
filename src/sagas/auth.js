@@ -13,7 +13,7 @@ import {
   setCurrentUser,
   unsetCurrentUser
 } from '../actions/authActions';
-import { actionTypes } from '../common/constants';
+import { actionTypes, USER_ROLES } from '../common/constants';
 import { removeAuthToken, setAuthToken } from '../utils/auth';
 import history from '../utils/history';
 
@@ -37,14 +37,18 @@ export function* loginUser({ payload }) {
   try {
     const response = yield callWrapperSaga(authLogin.post, payload);
     const data = response.data[0];
-    const { access_token } = data;
+    const { access_token, role } = data;
 
     yield setAuthToken(access_token);
     yield put(setCurrentUser({ data }));
     yield put(loginUserSuccess());
 
     toast.success('User successfully loged in');
-    history.push('/admin');
+    if (role === USER_ROLES.ADMIN || role === USER_ROLES.AGENT) {
+      history.push('/admin');
+    } else if (role === USER_ROLES.CUSTOMER) {
+      history.push('/customer');
+    }
   } catch (err) {
     console.log(err);
     yield put(loginUserFailure({ errors: err }));
