@@ -26,7 +26,7 @@ export function* signupUser({ payload }) {
     toast.success('User successfully registered');
     history.push('/');
   } catch (err) {
-    console.error(err);
+    window.console.error(err);
     yield put(signupUserFailure({ errors: err }));
     toast.error('Unable to register the user');
   }
@@ -50,7 +50,7 @@ export function* loginUser({ payload }) {
       history.push('/customer');
     }
   } catch (err) {
-    console.log(err);
+    window.console.error(err);
     yield put(loginUserFailure({ errors: err }));
     toast.error('Unable to loged in');
   }

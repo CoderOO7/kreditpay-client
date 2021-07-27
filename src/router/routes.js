@@ -5,6 +5,7 @@ import SignUp from '@kreditpay/components/SignUp';
 import UserAdd from '@kreditpay/components/User/UserAdd';
 import UserPage from '@kreditpay/components/User/UserPage';
 import NotFound from '@kreditpay/components/NotFound';
+import AppLandingPage from '@kreditpay/components/AppLandingPage';
 import routerGuard from './routerGuards';
 
 export const dashboardRoutes = {
@@ -28,7 +29,7 @@ export const dashboardRoutes = {
       }
     }
   },
-  client: {
+  customer: {
     index: {
       exact: true,
       redirect: true,
@@ -60,9 +61,15 @@ export default {
     guardFuntion: routerGuard.mustBeAuthorized,
     redirectPath: '/'
   },
-  signIn: {
+  landingPage: {
     exact: true,
     path: '/',
+    component: AppLandingPage,
+    guardFuntion: routerGuard.mustBeUnAuthorized
+  },
+  signIn: {
+    exact: true,
+    path: '/signIn',
     component: SignIn,
     guardFuntion: routerGuard.mustBeUnAuthorized,
     redirectPath: '/admin'
