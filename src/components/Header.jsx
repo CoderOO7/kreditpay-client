@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { logoutUser } from '../actions';
-import history from '../utils/history';
 
 class Header extends Component {
   handleLogoutClick = () => {
@@ -12,7 +11,7 @@ class Header extends Component {
   };
 
   render() {
-    const { auth: { isAuthenticated } = {} } = this.props;
+    const { auth: { isAuthenticated } = {}, history } = this.props;
     return (
       <header className='py-4 px-8 w-full bg-white shadow-md'>
         <nav className='nav'>
