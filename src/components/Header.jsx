@@ -13,7 +13,7 @@ class Header extends Component {
   render() {
     const { auth: { isAuthenticated } = {}, history } = this.props;
     return (
-      <header className='py-4 px-8 w-full bg-white shadow-md'>
+      <header className='py-4 px-4 sm:px-8 w-full bg-white shadow-md'>
         <nav className='nav'>
           <div className='flex justify-between'>
             <div className='nav__brand font-bold text-2xl'>
@@ -29,7 +29,7 @@ class Header extends Component {
               </button>
             )}
             {!isAuthenticated && (
-              <div className='space-x-8'>
+              <div className='space-x-4 sm:space-x-8'>
                 <button
                   type='button'
                   className='text-blue-500 hover:underline'

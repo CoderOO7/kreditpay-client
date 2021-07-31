@@ -37,17 +37,14 @@ class AppLandingPage extends Component {
       <>
         <Header />
         <main className=''>
-          <section
-            id='about-us'
-            className='px-8 py-4 flex justify-items-between items-center space-x-8'
-          >
-            <div className='w-120 h-120 flex-1'>
+          <section id='about-us' className='px-8 py-4 space-y-4 sm:space-x-12'>
+            <div className='w-full sm:w-5/12 h-auto inline-block align-middle'>
               <PaymentCardImg />
             </div>
-            <div>
-              <header>
-                <p className='text-5xl font-bold'>Get Loan</p>
-                <p className='text-5xl font-bold text-yellow-600'>With Ease</p>
+            <div className='w-full sm:w-6/12 inline-block align-middle'>
+              <header className='text-4xl sm:text-5xl font-bold'>
+                <p>Get Loan</p>
+                <p className=' text-yellow-600'>With Ease</p>
               </header>
               <p className='about-us__content py-2'>
                 Lorem Ipsum is simply dummy text of the printing and typesetting industry.
@@ -64,12 +61,12 @@ class AppLandingPage extends Component {
           </section>
           <section id='features' className='px-8 py-6'>
             <header className='font-bold'>
-              <p className='text-4xl'>Secure Payment</p>
+              <p className='text-3xl sm:text-4xl'>Secure Payment</p>
               <p className='text-2xl text-yellow-600'>Packed with features</p>
             </header>
-            <div className='__content-container px-16'>
+            <div className='__content-container px-8 sm:px-16'>
               <div className='features__content py-4'>
-                <section className='__content-item flex justify-center items-center space-x-8'>
+                <section className='__content-item flex flex-col sm:flex-row justify-center items-center sm:space-x-8 space-y-8'>
                   <div className='flex-1'>
                     <OnlineTransactionImg />
                   </div>
@@ -82,11 +79,11 @@ class AppLandingPage extends Component {
                     <div className='w-120 h-120 flex-1'>Img Container</div>
                   </div>
                 </section>
-                <section className='__content-item flex justify-between items-center space-x-8'>
+                <section className='__content-item flex flex-col sm:flex-row justify-center items-center sm:space-x-8 space-y-8'>
                   <div className='order-first sm:order-last'>
                     <RealtimeSpendingImg />
                   </div>
-                  <div className='order-last sm:order-first flex-1 text-center'>
+                  <div className='flex-1 text-center'>
                     <h4 className='text-2xl'>Real Time Spending</h4>
                     <p>
                       Integer ornare neque mauris, ac vulputate lacus venenatis et.
@@ -94,8 +91,8 @@ class AppLandingPage extends Component {
                     </p>
                   </div>
                 </section>
-                <section className='__content-item flex justify-between items-center space-x-8'>
-                  <div className='order-last sm:order-first'>
+                <section className='__content-item flex flex-col sm:flex-row justify-center items-center sm:space-x-8 space-y-8'>
+                  <div>
                     <AlertAndAdviceImg />
                   </div>
                   <div className='text-center'>
@@ -112,8 +109,8 @@ class AppLandingPage extends Component {
         </main>
         <footer id='footer'>
           <div className='px-8  bg-black text-white'>
-            <div className='flex justify-between py-4'>
-              <div className='footer__contact-us space-y-4'>
+            <div className=' py-4 flex flex-col sm:flex-row justify-between space-y-4'>
+              <div className='footer__contact-us space-y-4 hidden sm:block'>
                 <p className='text-2xl text-white'>Contact Us</p>
                 <form
                   action=''
@@ -121,7 +118,7 @@ class AppLandingPage extends Component {
                   onSubmit={this._handleContactFormSubmit}
                 >
                   <input
-                    className='px-4 py-1 focus:ring-2 shadow-md outline-none'
+                    className='px-4 py-1 focus:ring-2 shadow-md outline-none rounded-sm'
                     type='text'
                     id='name'
                     name='name'
@@ -130,23 +127,23 @@ class AppLandingPage extends Component {
                     placeholder='Your name'
                   />
                   <input
-                    className='px-4 py-2 focus:ring-2 shadow-md outline-none'
+                    className='px-4 py-2 focus:ring-2 shadow-md outline-none rounded-sm'
                     type='email'
                     id='email'
                     name='email'
                     onChange={this._handleContactFormInputChange}
                     value={email}
-                    placeholder='Your Email'
+                    placeholder='Your email'
                   />
                   <textarea
-                    className='px-4 py-2 focus:ring-2 shadow-md outline-none'
+                    className='px-4 py-2 focus:ring-2 shadow-md outline-none rounded-sm'
                     id='message'
                     name='message'
                     type='text'
                     onChange={this._handleContactFormInputChange}
                     value={message}
                     rows={5}
-                    placeholder='Your Message'
+                    placeholder='Your message'
                   />
                   <button
                     type='submit'
@@ -178,7 +175,7 @@ class AppLandingPage extends Component {
               </div>
               <div className='footer__company-info'>
                 <p className='text-2xl text-white'>Kreditpay</p>
-                <ul className='space-y-4 pt-4'>
+                <ul className='space-y-4 pt-4 text-gray-400'>
                   <li className='flex items-center space-x-4'>
                     <EmailSvg />
                     <span>email@abc.com</span>
@@ -190,7 +187,7 @@ class AppLandingPage extends Component {
                 </ul>
               </div>
             </div>
-            <div className='footer__copyright text-center py-2'>
+            <div className='footer__copyright text-center py-2 text-xs'>
               © Kreditpay 2021 | Made by CoderOO7
             </div>
           </div>
