@@ -6,6 +6,8 @@ import UserAdd from '@kreditpay/components/User/UserAdd';
 import UserPage from '@kreditpay/components/User/UserPage';
 import NotFound from '@kreditpay/components/NotFound';
 import AppLandingPage from '@kreditpay/components/AppLandingPage';
+import ContactUs from '@kreditpay/components/ContactUs';
+
 import routerGuard from './routerGuards';
 
 export const dashboardRoutes = {
@@ -65,6 +67,12 @@ export default {
     exact: true,
     path: '/',
     component: AppLandingPage,
+    guardFuntion: routerGuard.mustBeUnAuthorized
+  },
+  contactUs: {
+    exact: true,
+    path: '/contactUs',
+    component: ContactUs,
     guardFuntion: routerGuard.mustBeUnAuthorized
   },
   signIn: {

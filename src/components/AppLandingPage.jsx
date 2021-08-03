@@ -1,38 +1,16 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
+import { withRouter } from 'react-router-dom';
+
 import Header from './Header';
+import Footer from './Footer';
+
 import PaymentCardImg from '../assets/images/lp-about-payment.svg';
 import AlertAndAdviceImg from '../assets/images/lp-alert-and-advices.svg';
 import OnlineTransactionImg from '../assets/images/lp-online-transaction.svg';
 import RealtimeSpendingImg from '../assets/images/lp-realtime-spending.svg';
-import EmailSvg from '../assets/images/email.svg';
-import PhoneSvg from '../assets/images/phone.svg';
 
-class AppLandingPage extends Component {
-  state = {
-    name: '',
-    email: '',
-    message: ''
-  };
-
-  _handleContactFormInputChange = ({ target: { name, value } }) => {
-    this.setState({
-      [name]: value
-    });
-  };
-
-  _handleContactFormSubmit = () => {
-    const { name, email, message } = this.state;
-    // Todo
-
-    this.setState({
-      name: '',
-      email: '',
-      message: ''
-    });
-  };
-
+class AppLandingPage extends PureComponent {
   render() {
-    const { name, email, message } = this.state;
     return (
       <>
         <Header />
@@ -95,7 +73,7 @@ class AppLandingPage extends Component {
                   <div>
                     <AlertAndAdviceImg />
                   </div>
-                  <div className='text-center'>
+                  <div className='flex-1 text-center'>
                     <h4 className='text-2xl'>Alert and advices</h4>
                     <p>
                       Integer ornare neque mauris, ac vulputate lacus venenatis et.
@@ -107,94 +85,10 @@ class AppLandingPage extends Component {
             </div>
           </section>
         </main>
-        <footer id='footer'>
-          <div className='px-8  bg-black text-white'>
-            <div className=' py-4 flex flex-col sm:flex-row justify-between space-y-4'>
-              <div className='footer__contact-us space-y-4 hidden sm:block'>
-                <p className='text-2xl text-white'>Contact Us</p>
-                <form
-                  action=''
-                  className='flex flex-col space-y-4 text-black outline-none'
-                  onSubmit={this._handleContactFormSubmit}
-                >
-                  <input
-                    className='px-4 py-1 focus:ring-2 shadow-md outline-none rounded-sm'
-                    type='text'
-                    id='name'
-                    name='name'
-                    onChange={this._handleContactFormInputChange}
-                    value={name}
-                    placeholder='Your name'
-                  />
-                  <input
-                    className='px-4 py-2 focus:ring-2 shadow-md outline-none rounded-sm'
-                    type='email'
-                    id='email'
-                    name='email'
-                    onChange={this._handleContactFormInputChange}
-                    value={email}
-                    placeholder='Your email'
-                  />
-                  <textarea
-                    className='px-4 py-2 focus:ring-2 shadow-md outline-none rounded-sm'
-                    id='message'
-                    name='message'
-                    type='text'
-                    onChange={this._handleContactFormInputChange}
-                    value={message}
-                    rows={5}
-                    placeholder='Your message'
-                  />
-                  <button
-                    type='submit'
-                    className='bg-blue-700 text-white w-24 h-10 rounded-md hover:bg-blue-600'
-                  >
-                    Submit
-                  </button>
-                </form>
-              </div>
-              <div className='footer__site-map space-y-4'>
-                <p className='text-2xl text-white'>Site Map</p>
-                <div className='flex flex-col space-y-4 text-gray-400'>
-                  <a className='hover:text-gray-200' href='/signIn'>
-                    Login
-                  </a>
-                  <a className='hover:text-gray-200' href='/signUp'>
-                    SignUp
-                  </a>
-                  <a className='hover:text-gray-200' href='#features'>
-                    Features
-                  </a>
-                  <a className='hover:text-gray-200' href='#about-us'>
-                    About Us
-                  </a>
-                  <a className='hover:text-gray-200' href='#'>
-                    Contact Us
-                  </a>
-                </div>
-              </div>
-              <div className='footer__company-info'>
-                <p className='text-2xl text-white'>Kreditpay</p>
-                <ul className='space-y-4 pt-4 text-gray-400'>
-                  <li className='flex items-center space-x-4'>
-                    <EmailSvg />
-                    <span>email@abc.com</span>
-                  </li>
-                  <li className='flex items-center space-x-4'>
-                    <PhoneSvg />
-                    <span>+91-9211921192</span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div className='footer__copyright text-center py-2 text-xs'>
-              © Kreditpay 2021 | Made by CoderOO7
-            </div>
-          </div>
-        </footer>
+        <Footer />
       </>
     );
   }
 }
 
-export default AppLandingPage;
+export default withRouter(AppLandingPage);

@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { logoutUser } from '../actions';
+import { appLocalStorage } from '../utils/storage';
+import { ACCESS_TOKEN } from '../common/constants';
 
 class Header extends Component {
   handleLogoutClick = () => {
@@ -12,6 +14,8 @@ class Header extends Component {
 
   render() {
     const { auth: { isAuthenticated } = {}, history } = this.props;
+    const isHaveAccess = isAuthenticated || !!appLocalStorage.getItem(ACCESS_TOKEN);
+
     return (
       <header className='py-4 px-4 sm:px-8 w-full bg-white shadow-md'>
         <nav className='nav'>
@@ -19,7 +23,7 @@ class Header extends Component {
             <div className='nav__brand font-bold text-2xl'>
               <Link to='/'>KreditPay</Link>
             </div>
-            {isAuthenticated && (
+            {isHaveAccess && (
               <button
                 type='button'
                 className='hover:text-orange'
@@ -28,7 +32,7 @@ class Header extends Component {
                 LogOut
               </button>
             )}
-            {!isAuthenticated && (
+            {!isHaveAccess && (
               <div className='space-x-4 sm:space-x-8'>
                 <button
                   type='button'
