@@ -1,5 +1,7 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
+import { connect, useDispatch } from 'react-redux';
 import ContactSvgImg from '../assets/images/contact.svg';
+import { createContactus } from '../actions';
 import Header from './Header';
 import Footer from './Footer';
 
@@ -7,12 +9,23 @@ const ContactUs = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
+  const dispatch = useDispatch();
 
-  const _handleContactFormSubmit = useCallback((evt) => {
-    evt.preventDefault();
-    // Todo
-    console.log({ name, email, message });
+  const _reset = useCallback(() => {
+    setName('');
+    setEmail('');
+    setMessage('');
   });
+
+  const _handleContactFormSubmit = useCallback(
+    ({ name, email, message }, evt) => {
+      if (evt) evt.preventDefault();
+      const payloads = { name, email, message };
+      dispatch(createContactus(payloads));
+      _reset();
+    },
+    [dispatch]
+  );
 
   return (
     <>
@@ -31,7 +44,7 @@ const ContactUs = () => {
             <form
               action=''
               className='flex flex-col space-y-4 text-black outline-none'
-              // onSubmit={this._handleContactFormSubmit}
+              onSubmit={_handleContactFormSubmit.bind(null, { name, email, message })}
             >
               <input
                 className='px-4 py-2 focus:ring-2 shadow-md outline-none rounded-sm'
@@ -41,6 +54,7 @@ const ContactUs = () => {
                 onChange={({ target: { value } }) => setName(value)}
                 value={name}
                 placeholder='Your name'
+                required
               />
               <input
                 className='px-4 py-2 focus:ring-2 shadow-md outline-none rounded-sm'
@@ -50,6 +64,7 @@ const ContactUs = () => {
                 onChange={({ target: { value } }) => setEmail(value)}
                 value={email}
                 placeholder='Your email'
+                required
               />
               <textarea
                 className='px-4 py-2 focus:ring-2 shadow-md outline-none rounded-sm'
@@ -60,6 +75,7 @@ const ContactUs = () => {
                 value={message}
                 rows={5}
                 placeholder='Your message'
+                required
               />
               <button
                 type='submit'
@@ -79,4 +95,4 @@ const ContactUs = () => {
   );
 };
 
-export default ContactUs;
+export default connect(null)(ContactUs);

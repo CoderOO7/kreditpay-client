@@ -40,7 +40,12 @@ export const actionTypes = Object.freeze(
     UPDATE_USER: undefined,
     UPDATE_USER_REQUEST: undefined,
     UPDATE_USER_SUCCESS: undefined,
-    UPDATE_USER_FAILURE: undefined
+    UPDATE_USER_FAILURE: undefined,
+
+    CREATE_CONTACTUS: undefined,
+    CREATE_CONTACTUS_REQUEST: undefined,
+    CREATE_CONTACTUS_SUCCESS: undefined,
+    CREATE_CONTACTUS_FAILURE: undefined
   })
 );
 

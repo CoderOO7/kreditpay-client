@@ -50,7 +50,7 @@ export function* loginUser({ payload }) {
       history.push('/customer');
     }
   } catch (err) {
-    window.console.error(err);
+    window.console.log(err);
     yield put(loginUserFailure({ errors: err }));
     toast.error('Unable to loged in');
   }
