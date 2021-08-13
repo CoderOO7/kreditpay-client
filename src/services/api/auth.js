@@ -20,4 +20,14 @@ const authSignUp = new ApiCore({
   resource: 'v1/signup'
 });
 
-export { authLogin, authSignUp };
+const authUserMe = new ApiCore({
+  getAll: false,
+  getSingle: true,
+  post: false,
+  put: false,
+  patch: false,
+  delete: false,
+  resource: 'v1/users/me'
+});
+
+export { authLogin, authSignUp, authUserMe };

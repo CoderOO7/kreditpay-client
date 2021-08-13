@@ -42,6 +42,11 @@ export const actionTypes = Object.freeze(
     UPDATE_USER_SUCCESS: undefined,
     UPDATE_USER_FAILURE: undefined,
 
+    FETCH_USER_ME: undefined,
+    FETCH_USER_ME_REQUEST: undefined,
+    FETCH_USER_ME_SUCCESS: undefined,
+    FETCH_USER_ME_FAILURE: undefined,
+
     CREATE_CONTACTUS: undefined,
     CREATE_CONTACTUS_REQUEST: undefined,
     CREATE_CONTACTUS_SUCCESS: undefined,

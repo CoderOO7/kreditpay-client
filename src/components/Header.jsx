@@ -4,12 +4,25 @@ import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { logoutUser } from '../actions';
 import { appLocalStorage } from '../utils/storage';
-import { ACCESS_TOKEN } from '../common/constants';
+import { ACCESS_TOKEN, USER_ROLES } from '../common/constants';
 
 class Header extends Component {
   handleLogoutClick = () => {
     const { dispatch } = this.props;
     dispatch(logoutUser());
+  };
+
+  _getHomePath = () => {
+    const { auth: { user } = {} } = this.props;
+    let path = '/';
+
+    if (user.role === USER_ROLES.ADMIN || user.role === USER_ROLES.AGENT) {
+      path = '/admin';
+    } else if (user.role === USER_ROLES.CUSTOMER) {
+      path = '/customer';
+    }
+
+    return path;
   };
 
   render() {
@@ -21,12 +34,12 @@ class Header extends Component {
         <nav className='nav'>
           <div className='flex justify-between'>
             <div className='nav__brand font-bold text-2xl'>
-              <Link to='/'>KreditPay</Link>
+              <Link to={this._getHomePath}>KreditPay</Link>
             </div>
             {isHaveAccess && (
               <button
                 type='button'
-                className='hover:text-orange'
+                className='px-4 py-1 bg-blue-500 text-white rounded-md hover:bg-blue-400 outline-none'
                 onClick={this.handleLogoutClick}
               >
                 LogOut

@@ -33,7 +33,6 @@ const Footer = () => {
           <div className='footer__contact-us space-y-4 hidden sm:block'>
             <p className='text-2xl text-white'>Contact Us</p>
             <form
-              action=''
               className='flex flex-col space-y-4 text-black outline-none'
               onSubmit={_handleContactFormSubmit.bind(null, { name, email, message })}
             >

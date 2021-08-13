@@ -12,7 +12,11 @@ export const {
   loginUserRequest,
   loginUserSuccess,
   loginUserFailure,
-  logoutUser
+  logoutUser,
+  fetchUserMe,
+  fetchUserMeRequest,
+  fetchUserMeSuccess,
+  fetchUserMeFailure
 } = createActions({
   [actionTypes.SET_CURRENT_USER]: (payload) => payload,
   [actionTypes.UNSET_CURRENT_USER]: (payload) => payload,
@@ -24,5 +28,9 @@ export const {
   [actionTypes.LOGIN_USER_REQUEST]: (payload) => payload,
   [actionTypes.LOGIN_USER_SUCCESS]: (payload) => payload,
   [actionTypes.LOGIN_USER_FAILURE]: (payload) => payload,
-  [actionTypes.LOGOUT_USER]: (payload) => payload
+  [actionTypes.LOGOUT_USER]: (payload) => payload,
+  [actionTypes.FETCH_USER_ME]: (payload) => payload,
+  [actionTypes.FETCH_USER_ME_REQUEST]: (payload) => payload,
+  [actionTypes.FETCH_USER_ME_SUCCESS]: (payload) => payload,
+  [actionTypes.FETCH_USER_ME_FAILURE]: (payload) => payload
 });
