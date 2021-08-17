@@ -89,6 +89,6 @@ export default function* rootSaga() {
     takeLatest(actionTypes.LOGIN_USER, loginUser),
     takeLatest(actionTypes.SIGNUP_USER, signupUser),
     takeLatest(actionTypes.LOGOUT_USER, logoutUser),
-    takeLatest(actionTypes.FETCH_USER_ME, logoutUser)
+    takeLatest(actionTypes.FETCH_USER_ME, fetchUserMe)
   ]);
 }

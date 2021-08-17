@@ -5,6 +5,12 @@ import keyMirror from 'fbjs/lib/keyMirror';
  */
 export const actionTypes = Object.freeze(
   keyMirror({
+    // app
+    INIT_APP_MOUNT: undefined,
+    INIT_APP_MOUNT_SUCCESS: undefined,
+    INIT_APP_MOUNT_FAILURE: undefined,
+    REDIRECT_URL: undefined,
+
     SET_ERRORS: undefined,
     PURGE_ERRORS: undefined,
 

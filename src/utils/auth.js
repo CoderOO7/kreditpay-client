@@ -10,9 +10,7 @@ export const setAuthToken = (token) => {
   }
 };
 
-export const getAuthToken = () => {
-  appLocalStorage.getItem(ACCESS_TOKEN);
-};
+export const getAuthToken = () => appLocalStorage.getItem(ACCESS_TOKEN);
 
 export const removeAuthToken = () => {
   appLocalStorage.clear(ACCESS_TOKEN);

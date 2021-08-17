@@ -3,8 +3,7 @@ import React, { Component } from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { logoutUser } from '../actions';
-import { appLocalStorage } from '../utils/storage';
-import { ACCESS_TOKEN, USER_ROLES } from '../common/constants';
+import { USER_ROLES } from '../common/constants';
 
 class Header extends Component {
   handleLogoutClick = () => {
@@ -27,7 +26,7 @@ class Header extends Component {
 
   render() {
     const { auth: { isAuthenticated } = {}, history } = this.props;
-    const isHaveAccess = isAuthenticated || !!appLocalStorage.getItem(ACCESS_TOKEN);
+    const isHaveAccess = isAuthenticated;
 
     return (
       <header className='py-4 px-4 sm:px-8 w-full bg-white shadow-md'>
