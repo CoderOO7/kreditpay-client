@@ -44,15 +44,33 @@ export const dashboardRoutes = {
       component: CustomerLandingPage
     }
   },
-  notFound: {
-    path: '*',
-    component: NotFound
+  agent: {
+    index: {
+      exact: true,
+      redirect: true,
+      path: '/agent',
+      to: '/admin/dashboard'
+    }
+  },
+  app: {
+    index: {
+      exact: true,
+      redirect: true,
+      path: '/app',
+      to: '/app/dashboard'
+    }
   }
 };
 
 export default {
   admin: {
     path: '/admin',
+    component: Dashboard,
+    guardFuntion: routerGuard.mustBeAuthorized,
+    redirectPath: '/'
+  },
+  agent: {
+    path: '/agent',
     component: Dashboard,
     guardFuntion: routerGuard.mustBeAuthorized,
     redirectPath: '/'
@@ -67,7 +85,15 @@ export default {
     exact: true,
     path: '/',
     component: AppLandingPage,
-    guardFuntion: routerGuard.mustBeUnAuthorized
+    guardFuntion: routerGuard.mustBeUnAuthorized,
+    redirectPath: '/app'
+  },
+  app: {
+    exact: true,
+    path: '/app',
+    component: Dashboard,
+    guardFuntion: routerGuard.mustBeAuthorized,
+    redirectPath: '/'
   },
   contactUs: {
     exact: true,

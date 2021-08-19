@@ -9,7 +9,7 @@ import store from '../store';
 import ErrorBoundary from './ErrorBoundary';
 import routes from '../router/routes';
 import createRouter from '../router/createRouter';
-import { setAuthToken } from '../utils/auth';
+import { setApiInterceptor, setAuthToken } from '../utils/auth';
 import { ACCESS_TOKEN } from '../common/constants';
 import { appLocalStorage } from '../utils/storage';
 import history from '../utils/history';
@@ -19,7 +19,7 @@ const AppRouter = createRouter(routes);
  * Reset default headers for axios api on page refresh
  */
 setAuthToken(appLocalStorage.getItem(ACCESS_TOKEN));
-
+setApiInterceptor();
 class App extends PureComponent {
   render() {
     return (

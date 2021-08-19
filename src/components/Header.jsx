@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { logoutUser } from '../actions';
-import { USER_ROLES } from '../common/constants';
+import { getUserHomePath } from '../utils/user';
 
 class Header extends Component {
   handleLogoutClick = () => {
@@ -11,21 +11,8 @@ class Header extends Component {
     dispatch(logoutUser());
   };
 
-  _getHomePath = () => {
-    const { auth: { user } = {} } = this.props;
-    let path = '/';
-
-    if (user.role === USER_ROLES.ADMIN || user.role === USER_ROLES.AGENT) {
-      path = '/admin';
-    } else if (user.role === USER_ROLES.CUSTOMER) {
-      path = '/customer';
-    }
-
-    return path;
-  };
-
   render() {
-    const { auth: { isAuthenticated } = {}, history } = this.props;
+    const { auth: { isAuthenticated, user = {} } = {}, history } = this.props;
     const isHaveAccess = isAuthenticated;
 
     return (
@@ -33,7 +20,7 @@ class Header extends Component {
         <nav className='nav'>
           <div className='flex justify-between'>
             <div className='nav__brand font-bold text-2xl'>
-              <Link to={this._getHomePath}>KreditPay</Link>
+              <Link to={getUserHomePath(user.role)}>KreditPay</Link>
             </div>
             {isHaveAccess && (
               <button

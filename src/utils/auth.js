@@ -17,3 +17,15 @@ export const removeAuthToken = () => {
   // Delete auth header
   delete axios.defaults.headers.common.Authorization;
 };
+
+export const setApiInterceptor = () => {
+  axios.interceptors.response.use(
+    (response) => response,
+    (error) => {
+      if (error.response.status === 401) {
+        removeAuthToken();
+        window.location.href = '/signin';
+      }
+    }
+  );
+};
