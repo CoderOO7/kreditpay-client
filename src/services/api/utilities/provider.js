@@ -5,13 +5,15 @@ axios.defaults.headers['Content-Type'] = 'application/json';
 axios.defaults.headers.language = 'en';
 axios.defaults.baseURL = process.env.API_LOCATION;
 
-const getSingle = (resource, id) =>
-  axios({
+const getSingle = (resource, id) => {
+  const url = id ? `${resource}/${id}` : `${resource}`;
+  return axios({
     method: 'get',
-    url: `${resource}/${id}`
+    url
   })
     .then(handleResponse)
     .catch(handleError);
+};
 
 const getAll = (resource) =>
   axios({

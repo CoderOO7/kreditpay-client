@@ -106,7 +106,7 @@ export default {
     path: '/signIn',
     component: SignIn,
     guardFuntion: routerGuard.mustBeUnAuthorized,
-    redirectPath: '/admin'
+    redirectPath: '/'
   },
   signUp: {
     exact: true,
