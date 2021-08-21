@@ -9,6 +9,7 @@ export const actionTypes = Object.freeze(
     INIT_APP_MOUNT: undefined,
     INIT_APP_MOUNT_SUCCESS: undefined,
     INIT_APP_MOUNT_FAILURE: undefined,
+    RESET_APP: undefined,
     REDIRECT_URL: undefined,
 
     SET_ERRORS: undefined,

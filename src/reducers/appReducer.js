@@ -34,6 +34,9 @@ export default function (state = initialState, { type, payload }) {
         redirectUrl: payload.data
       };
 
+    case actionTypes.RESET_APP:
+      return initialState;
+
     default:
       break;
   }

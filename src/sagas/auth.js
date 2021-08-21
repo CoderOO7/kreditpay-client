@@ -14,9 +14,10 @@ import {
   unsetCurrentUser,
   fetchUserMeRequest,
   fetchUserMeSuccess,
-  fetchUserMeFailure
-} from '../actions/authActions';
-import { actionTypes, USER_ROLES } from '../common/constants';
+  fetchUserMeFailure,
+  resetApp
+} from '../actions';
+import { actionTypes } from '../common/constants';
 import { removeAuthToken, setAuthToken } from '../utils/auth';
 import history from '../utils/history';
 
@@ -57,18 +58,9 @@ export function* loginUser({ payload }) {
     const data = response.data[0];
     const { access_token } = data;
     yield setAuthToken(access_token);
-    if (response) {
-      const response2 = yield fetchUserMe();
-      const { role } = response2.data;
-      yield put(loginUserSuccess());
-      toast.success('User successfully loged in');
 
-      if (role === USER_ROLES.ADMIN || role === USER_ROLES.AGENT) {
-        history.push('/admin');
-      } else if (role === USER_ROLES.CUSTOMER) {
-        history.push('/customer');
-      }
-    }
+    yield put(loginUserSuccess());
+    history.push('/app');
   } catch (err) {
     window.console.error(err);
     yield put(loginUserFailure({ errors: err }));
@@ -79,6 +71,7 @@ export function* loginUser({ payload }) {
 export function* logoutUser() {
   yield put(unsetCurrentUser());
   yield removeAuthToken();
+  yield put(resetApp());
 
   toast.success('Log out successfully');
   history.push('/');

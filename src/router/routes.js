@@ -113,7 +113,7 @@ export default {
     path: '/signUp',
     component: SignUp,
     guardFuntion: routerGuard.mustBeUnAuthorized,
-    redirectPath: '/'
+    redirectPath: '/signin'
   },
   notFound: {
     path: '*',
