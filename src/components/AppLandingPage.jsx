@@ -25,15 +25,10 @@ class AppLandingPage extends PureComponent {
                 <p className=' text-yellow-600'>With Ease</p>
               </header>
               <p className='about-us__content py-2'>
-                Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                Lorem Ipsum has been the industry's standard dummy text ever since the
-                1500s, when an unknown printer took a galley of type and scrambled it to
-                make a type specimen book. It has survived not only five centuries, but
-                also the leap into electronic typesetting, remaining essentially
-                unchanged. It was popularised in the 1960s with the release of Letraset
-                sheets containing Lorem Ipsum passages, and more recently with desktop
-                publishing software like Aldus PageMaker including versions of Lorem
-                Ipsum.
+                Kreditpay is a crypto lending platform that allow you to get an instant
+                cash loan using your bitcoin. It's a decentralized network where we help
+                our customers use their cryptocurrencies to get cash loans up to 80% of
+                their BTC's value and starting at 0% interest.
               </p>
             </div>
           </section>
@@ -51,10 +46,10 @@ class AppLandingPage extends PureComponent {
                   <div className='flex-1 text-center'>
                     <h4 className='text-2xl'>Online Transaction</h4>
                     <p>
-                      Integer ornare neque mauris, ac vulputate lacus venenatis et.
-                      Pellentesque ut ultrices purus.
+                      Being decentralized it's a peer to peer network which provide secure
+                      transaction and allow to have multiple copies of your transaction
+                      history.
                     </p>{' '}
-                    <div className='w-120 h-120 flex-1'>Img Container</div>
                   </div>
                 </section>
                 <section className='__content-item flex flex-col sm:flex-row justify-center items-center sm:space-x-8 space-y-8'>
@@ -64,8 +59,8 @@ class AppLandingPage extends PureComponent {
                   <div className='flex-1 text-center'>
                     <h4 className='text-2xl'>Real Time Spending</h4>
                     <p>
-                      Integer ornare neque mauris, ac vulputate lacus venenatis et.
-                      Pellentesque ut ultrices purus.
+                      As soon as you lend your bitcoins, you will get your cash
+                      immediately with your preferred mode of payment gateway.
                     </p>
                   </div>
                 </section>
@@ -76,8 +71,9 @@ class AppLandingPage extends PureComponent {
                   <div className='flex-1 text-center'>
                     <h4 className='text-2xl'>Alert and advices</h4>
                     <p>
-                      Integer ornare neque mauris, ac vulputate lacus venenatis et.
-                      Pellentesque ut ultrices purus.
+                      As our valuable customer you will regularly receive email alerts
+                      about your transactions and advice from our team to maximize your
+                      loan benefits.
                     </p>
                   </div>
                 </section>
