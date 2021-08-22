@@ -19,13 +19,10 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader']
-      },
-      {
-        test: /\.s[ac]ss$/i,
+        test: /\.(css|sass|scss)$/i,
         use: [
-          MiniCssExtractPlugin.loader,
+          // MiniCssExtractPlugin.loader,
+          'style-loader',
           'css-loader',
           {
             loader: 'postcss-loader', // postcss loader needed for tailwindcss
