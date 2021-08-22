@@ -7,6 +7,11 @@ import rootSagas from './sagas/index';
 const saga = createSagaMiddleware();
 const middleWares = [saga, thunk];
 
+if (process.env.NODE_ENV === `development`) {
+  const { logger } = require(`redux-logger`);
+  middleWares.push(logger);
+}
+
 const store = createStore(
   rootReducer,
   compose(

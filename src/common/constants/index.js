@@ -5,6 +5,13 @@ import keyMirror from 'fbjs/lib/keyMirror';
  */
 export const actionTypes = Object.freeze(
   keyMirror({
+    // app
+    INIT_APP_MOUNT: undefined,
+    INIT_APP_MOUNT_SUCCESS: undefined,
+    INIT_APP_MOUNT_FAILURE: undefined,
+    RESET_APP: undefined,
+    REDIRECT_URL: undefined,
+
     SET_ERRORS: undefined,
     PURGE_ERRORS: undefined,
 
@@ -40,7 +47,17 @@ export const actionTypes = Object.freeze(
     UPDATE_USER: undefined,
     UPDATE_USER_REQUEST: undefined,
     UPDATE_USER_SUCCESS: undefined,
-    UPDATE_USER_FAILURE: undefined
+    UPDATE_USER_FAILURE: undefined,
+
+    FETCH_USER_ME: undefined,
+    FETCH_USER_ME_REQUEST: undefined,
+    FETCH_USER_ME_SUCCESS: undefined,
+    FETCH_USER_ME_FAILURE: undefined,
+
+    CREATE_CONTACTUS: undefined,
+    CREATE_CONTACTUS_REQUEST: undefined,
+    CREATE_CONTACTUS_SUCCESS: undefined,
+    CREATE_CONTACTUS_FAILURE: undefined
   })
 );
 

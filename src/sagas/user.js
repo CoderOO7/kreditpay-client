@@ -27,7 +27,7 @@ export function* fetchUsers() {
 
     yield put(fetchUsersSuccess({ data: users }));
   } catch (errors) {
-    console.error(errors);
+    window.console.error(errors);
     yield put(fetchUsersFailure({ errors }));
     toast.error('Unable to fetch the users');
   }
@@ -42,7 +42,7 @@ export function* createUser({ payload: { data } }) {
     yield put(createUserSuccess({ data: user }));
     toast.success('User successfully created');
   } catch (errors) {
-    console.error(errors);
+    window.console.error(errors);
     yield put(createUserFailure({ errors }));
     toast.error('Unable to create the user');
   }
@@ -57,7 +57,7 @@ export function* updateUser({ payload: { id, data } }) {
     yield put(updateUserSuccess({ id, data: user }));
     toast.success('User successfully updated');
   } catch (errors) {
-    console.error(errors);
+    window.console.error(errors);
     yield put(updateUserFailure({ errors }));
     toast.error('Unable to update the user');
   }
@@ -70,7 +70,7 @@ export function* deleteUser({ payload: { id } = {} }) {
     yield put(deleteUserSuccess({ id }));
     toast.success('User successfully deleted');
   } catch (errors) {
-    console.error(errors);
+    window.console.error(errors);
     yield put(deleteUserFailure({ errors }));
     toast.error('Unable to delete the user');
   }

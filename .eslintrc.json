@@ -51,7 +51,7 @@
     "react/jsx-wrap-multilines": "off",
     "react/jsx-one-expression-per-line": "off",
     "react/jsx-props-no-spreading": "off",
-    "react/no-did-update-set-state":"warn"
+    "react/no-did-update-set-state": "warn"
   },
   "settings": {
     "react": {

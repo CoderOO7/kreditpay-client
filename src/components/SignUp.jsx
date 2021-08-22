@@ -199,7 +199,7 @@ class SignUp extends Component {
           <footer className='text-sm space-y-2 mt-6 text-center'>
             <p>
               Already have an account?
-              <Link to='/' className='underline font-semibold hover:text-blue-800'>
+              <Link to='/signIn' className='underline font-semibold hover:text-blue-800'>
                 Sign In
               </Link>
             </p>
