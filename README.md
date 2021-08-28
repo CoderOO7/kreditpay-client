@@ -12,5 +12,5 @@ npm install
 npm run dev
 
 # Create build
-npm build
+npm run build
 ```
