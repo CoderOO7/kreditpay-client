@@ -21,9 +21,8 @@ module.exports = {
       {
         test: /\.(css|sass|scss)$/i,
         use: [
-          // MiniCssExtractPlugin.loader,
-          'style-loader',
-          'css-loader',
+          MiniCssExtractPlugin.loader,
+          { loader: 'css-loader', options: { importLoaders: 1 } },
           {
             loader: 'postcss-loader', // postcss loader needed for tailwindcss
             options: {
