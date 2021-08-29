@@ -1,6 +1,6 @@
-# react-webpack-starter
+# kreditpay-client
 
-This is a react application starting template with integration of webpack.
+This is the frontend layer for kreditpay project.
 
 ## Quick Start
 
@@ -9,8 +9,8 @@ This is a react application starting template with integration of webpack.
 npm install
 
 # Run server
-npm start
+npm run dev
 
 # Create build
-npm build
+npm run build
 ```
