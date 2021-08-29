@@ -1,20 +1,23 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { connect, useDispatch } from 'react-redux';
-import ContactSvgImg from '../assets/images/contact.svg';
-import { createContactus } from '../actions';
+
 import Header from './Header';
 import Footer from './Footer';
+import { useInput } from '../hooks';
+import { createContactus } from '../actions';
+
+import ContactSvgImg from '../assets/images/contact.svg';
 
 const ContactUs = () => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [message, setMessage] = useState('');
+  const [name, bindName, resetName] = useInput('');
+  const [email, bindEmail, resetEmail] = useInput('');
+  const [message, bindMessage, resetMessage] = useInput('');
   const dispatch = useDispatch();
 
   const _reset = useCallback(() => {
-    setName('');
-    setEmail('');
-    setMessage('');
+    resetName();
+    resetEmail();
+    resetMessage();
   });
 
   const _handleContactFormSubmit = useCallback(
@@ -51,8 +54,7 @@ const ContactUs = () => {
                 type='text'
                 id='name'
                 name='name'
-                onChange={({ target: { value } }) => setName(value)}
-                value={name}
+                {...bindName}
                 placeholder='Your name'
                 required
               />
@@ -61,8 +63,7 @@ const ContactUs = () => {
                 type='email'
                 id='email'
                 name='email'
-                onChange={({ target: { value } }) => setEmail(value)}
-                value={email}
+                {...bindEmail}
                 placeholder='Your email'
                 required
               />
@@ -71,8 +72,7 @@ const ContactUs = () => {
                 id='message'
                 name='message'
                 type='text'
-                onChange={({ target: { value } }) => setMessage(value)}
-                value={message}
+                {...bindMessage}
                 rows={5}
                 placeholder='Your message'
                 required
