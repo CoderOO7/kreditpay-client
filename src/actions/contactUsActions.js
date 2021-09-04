@@ -7,7 +7,7 @@ export const {
   createContactusSuccess,
   createContactusFailure
 } = createActions({
-  [actionTypes.CREATE_CONTACTUS]: (payload) => payload,
+  [actionTypes.CREATE_CONTACTUS]: [(payload) => payload, (payload, meta) => meta],
   [actionTypes.CREATE_CONTACTUS_REQUEST]: (payload) => payload,
   [actionTypes.CREATE_CONTACTUS_SUCCESS]: (payload) => payload,
   [actionTypes.CREATE_CONTACTUS_FAILURE]: (payload) => payload

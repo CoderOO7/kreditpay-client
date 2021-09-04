@@ -1,4 +1,3 @@
-import { toast } from 'react-toastify';
 import { all, put, takeLatest } from 'redux-saga/effects';
 import { initAppMountFailure, initAppMountSuccess } from '../actions';
 import { actionTypes } from '../common/constants';

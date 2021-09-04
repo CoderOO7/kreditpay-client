@@ -1,17 +1,20 @@
-import React, { useState, useCallback, useEffect } from 'react';
-import { connect, useDispatch } from 'react-redux';
+import React, { useState, useCallback } from 'react';
+import { useDispatch } from 'react-redux';
 
 import Header from './Header';
 import Footer from './Footer';
 import { useInput } from '../hooks';
-import { createContactus } from '../actions';
 
 import ContactSvgImg from '../assets/images/contact.svg';
+import MailIcon from '../assets/images/mail-icon.svg';
+import { bindPromiseWithDispatch } from '../utils/redux';
+import { createContactus } from '../actions';
 
 const ContactUs = () => {
   const [name, bindName, resetName] = useInput('');
   const [email, bindEmail, resetEmail] = useInput('');
   const [message, bindMessage, resetMessage] = useInput('');
+  const [canShowSubmitSuccessPopup, setCanShowSubmitSuccessPopup] = useState(false);
   const dispatch = useDispatch();
 
   const _reset = useCallback(() => {
@@ -21,11 +24,16 @@ const ContactUs = () => {
   });
 
   const _handleContactFormSubmit = useCallback(
-    ({ name, email, message }, evt) => {
+    async ({ name, email, message }, evt) => {
       if (evt) evt.preventDefault();
       const payloads = { name, email, message };
-      dispatch(createContactus(payloads));
-      _reset();
+      const { success } = await bindPromiseWithDispatch(dispatch)(createContactus)(
+        payloads
+      );
+      if (success) {
+        setCanShowSubmitSuccessPopup(true);
+        _reset();
+      }
     },
     [dispatch]
   );
@@ -34,8 +42,7 @@ const ContactUs = () => {
     <>
       <Header />
       <div className='contact-us px-4 sm:px-8 py-4 space-x-4 flex items-center space-between min-h-screen'>
-        {/* <FloatingCogsBgPattern className='absolute min-w-screen min-h-screen z-0 fill-gray-400' /> */}
-        <div className='w-full px-4 py-8 sm:px-8 sm:py-16 bg-floating-cogs-pattern rounded-md shadow-lg'>
+        <div className='relative w-full px-4 py-8 sm:px-8 sm:py-16 rounded-md shadow-lg overflow-hidden'>
           <header className='space-y-2'>
             <h3 className='text-3xl font-bold'>Get in touch</h3>
             <p className='text-gray-400'>
@@ -85,6 +92,28 @@ const ContactUs = () => {
               </button>
             </form>
           </div>
+          <aside
+            className={`contact-us__popup-submit--success absolute top-0 left-0 h-full w-full opacity-0 bg-gradient-to-r from-blue-600 to-purple-500 transform translate-y-0 
+            transition-transform ease-in-out duration-700 ${
+              !canShowSubmitSuccessPopup ? 'translate-y-full' : 'opacity-100'
+            }`}
+          >
+            <div className='__popup-wrap flex flex-col w-full h-full items-center justify-center space-y-8 text-white'>
+              <div className='w-20 h-20'>
+                <MailIcon fill='white' />
+              </div>
+              <p>Thank you for contacting support, we will revert back soon</p>
+              <button
+                type='button'
+                className='w-24 px-2 py-2 bg-purple-500 hover:bg-purple-600 focus:outline-none text-white rounded-lg'
+                onClick={() => {
+                  setCanShowSubmitSuccessPopup(false);
+                }}
+              >
+                Close
+              </button>
+            </div>
+          </aside>
         </div>
         <div className='w-full'>
           <ContactSvgImg className='w-full max-h-96' />
@@ -95,4 +124,4 @@ const ContactUs = () => {
   );
 };
 
-export default connect(null)(ContactUs);
+export default ContactUs;
