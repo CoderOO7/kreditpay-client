@@ -23,8 +23,8 @@ export const setApiInterceptor = () => {
     (response) => response,
     (error) => {
       if (error.response && error.response.status === 401) {
-        if (window.location.pathname !== '/signin') {
-          window.location.assign('/signin');
+        if (window.location.pathname !== '/signIn') {
+          window.location.assign('/signIn');
         }
         removeAuthToken();
       }

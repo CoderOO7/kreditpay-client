@@ -1,19 +1,20 @@
 import React, { useState, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
+import { useInput } from '../hooks';
 import { createContactus } from '../actions';
 import EmailSvg from '../assets/images/email.svg';
 import PhoneSvg from '../assets/images/phone.svg';
 
 const Footer = () => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [message, setMessage] = useState('');
+  const [name, bindName, resetName] = useInput('');
+  const [email, bindEmail, resetEmail] = useInput('');
+  const [message, bindMessage, resetMessage] = useInput('');
   const dispatch = useDispatch();
 
   const _reset = useCallback(() => {
-    setName('');
-    setEmail('');
-    setMessage('');
+    resetName();
+    resetEmail();
+    resetMessage();
   });
 
   const _handleContactFormSubmit = useCallback(
@@ -41,8 +42,7 @@ const Footer = () => {
                 type='text'
                 id='name'
                 name='name'
-                onChange={({ target: { value } }) => setName(value)}
-                value={name}
+                {...bindName}
                 placeholder='Your name'
                 required
               />
@@ -51,8 +51,7 @@ const Footer = () => {
                 type='email'
                 id='email'
                 name='email'
-                onChange={({ target: { value } }) => setEmail(value)}
-                value={email}
+                {...bindEmail}
                 placeholder='Your email'
                 required
               />
@@ -61,8 +60,7 @@ const Footer = () => {
                 id='message'
                 name='message'
                 type='text'
-                onChange={({ target: { value } }) => setMessage(value)}
-                value={message}
+                {...bindMessage}
                 rows={5}
                 placeholder='Your message'
                 required
