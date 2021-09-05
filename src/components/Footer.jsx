@@ -1,9 +1,9 @@
-import React, { useState, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { useInput } from '../hooks';
 import { createContactus } from '../actions';
-import EmailSvg from '../assets/images/email.svg';
-import PhoneSvg from '../assets/images/phone.svg';
+import EmailSvg from '../assets/icons/email-icon.svg';
+import PhoneSvg from '../assets/icons/phone-icon.svg';
 
 const Footer = () => {
   const [name, bindName, resetName] = useInput('');

@@ -28,7 +28,7 @@ export function* signupUser({ payload }) {
     yield put(signupUserSuccess());
 
     toast.success('User successfully registered');
-    history.push('/');
+    history.push('/signIn');
   } catch (err) {
     window.console.error(err);
     yield put(signupUserFailure({ errors: err }));
