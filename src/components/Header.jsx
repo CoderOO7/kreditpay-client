@@ -4,6 +4,7 @@ import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { logoutUser } from '../actions';
 import { getUserHomePath } from '../utils/user';
+import Button from './shared/Button';
 
 class Header extends Component {
   handleLogoutClick = () => {
@@ -23,30 +24,30 @@ class Header extends Component {
               <Link to={getUserHomePath(user.role)}>KreditPay</Link>
             </div>
             {isHaveAccess && (
-              <button
+              <Button
                 type='button'
                 className='px-4 py-1 bg-blue-500 text-white rounded-md hover:bg-blue-400 outline-none'
                 onClick={this.handleLogoutClick}
               >
                 LogOut
-              </button>
+              </Button>
             )}
             {!isHaveAccess && (
               <div className='space-x-4 sm:space-x-8'>
-                <button
+                <Button
                   type='button'
                   className='text-blue-500 hover:underline'
                   onClick={() => history.push('/signIn')}
                 >
                   Login
-                </button>
-                <button
+                </Button>
+                <Button
                   type='button'
                   className='px-4 py-1 bg-blue-500 text-white rounded-md hover:bg-blue-400 outline-none'
                   onClick={() => history.push('/signUp')}
                 >
                   SignUp
-                </button>
+                </Button>
               </div>
             )}
           </div>

@@ -4,9 +4,11 @@ import { useDispatch } from 'react-redux';
 import Header from './Header';
 import Footer from './Footer';
 import { useInput } from '../hooks';
+import { Button } from './shared/Button';
 
-import ContactSvgImg from '../assets/images/contact.svg';
-import MailIcon from '../assets/images/mail-icon.svg';
+import ContactIcon from '../assets/icons/contact-icon.svg';
+import SendIcon from '../assets/icons/send-icon.svg';
+import MailIcon from '../assets/icons/mail-icon.svg';
 import { bindPromiseWithDispatch } from '../utils/redux';
 import { createContactus } from '../actions';
 
@@ -15,6 +17,7 @@ const ContactUs = () => {
   const [email, bindEmail, resetEmail] = useInput('');
   const [message, bindMessage, resetMessage] = useInput('');
   const [canShowSubmitSuccessPopup, setCanShowSubmitSuccessPopup] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
 
   const _reset = useCallback(() => {
@@ -27,6 +30,7 @@ const ContactUs = () => {
     async ({ name, email, message }, evt) => {
       if (evt) evt.preventDefault();
       const payloads = { name, email, message };
+      setIsLoading(true);
       const { success } = await bindPromiseWithDispatch(dispatch)(createContactus)(
         payloads
       );
@@ -34,6 +38,7 @@ const ContactUs = () => {
         setCanShowSubmitSuccessPopup(true);
         _reset();
       }
+      setIsLoading(false);
     },
     [dispatch]
   );
@@ -84,12 +89,15 @@ const ContactUs = () => {
                 placeholder='Your message'
                 required
               />
-              <button
-                type='submit'
+              <Button
+                isLoading={isLoading}
+                disabled={isLoading}
+                icon={SendIcon}
                 className='text-white w-24 h-10 bg-purple-600 hover:bg-purple-700 rounded-md'
+                type='submit'
               >
                 Send
-              </button>
+              </Button>
             </form>
           </div>
           <aside
@@ -116,7 +124,7 @@ const ContactUs = () => {
           </aside>
         </div>
         <div className='w-full'>
-          <ContactSvgImg className='w-full max-h-96' />
+          <ContactIcon className='w-full max-h-96' />
         </div>
       </div>
       <Footer />
