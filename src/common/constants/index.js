@@ -71,6 +71,17 @@ export const USER_ROLES = Object.freeze({
 });
 
 /**
+ * CURRENCY
+ */
+export const CURRENCY = Object.freeze(
+  keyMirror({
+    BTC: undefined,
+    ETH: undefined,
+    USDT: undefined
+  })
+);
+
+/**
  * Miscellaneous
  */
 export const APP_NAME = 'KREDITPAY';
