@@ -57,7 +57,12 @@ export const actionTypes = Object.freeze(
     CREATE_CONTACTUS: undefined,
     CREATE_CONTACTUS_REQUEST: undefined,
     CREATE_CONTACTUS_SUCCESS: undefined,
-    CREATE_CONTACTUS_FAILURE: undefined
+    CREATE_CONTACTUS_FAILURE: undefined,
+
+    CREATE_LOAN: undefined,
+    CREATE_LOAN_REQUEST: undefined,
+    CREATE_LOAN_SUCCESS: undefined,
+    CREATE_LOAN_FAILURE: undefined
   })
 );
 

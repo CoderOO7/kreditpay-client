@@ -2,14 +2,14 @@ import ApiCore from './utilities/core';
 
 const resource = 'v1/loans';
 
-const apiLoans = new ApiCore({
-  getAll: true,
-  getSingle: true,
+const apiLoan = new ApiCore({
+  getAll: false,
+  getSingle: false,
   post: true,
-  put: true,
+  put: false,
   patch: false,
   delete: true,
   resource
 });
 
-export { apiLoans };
+export { apiLoan };
