@@ -1,5 +1,5 @@
 // eslint-disable class-methods-use-this
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useInput } from '../hooks';
 import { Button } from './shared/Button';
@@ -199,8 +199,8 @@ function CustomerLandingPage() {
                 type='radio'
                 id={`daysToRepay-${o.value}`}
                 name='daysToRepay'
-                value={o.value}
                 {...bindDaysToRepay}
+                value={o.value}
                 required
               />
               {o.label}
