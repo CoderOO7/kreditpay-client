@@ -8,6 +8,7 @@ import uniqid from 'uniqid';
 
 import UserEditModal from '../modals/UserEditModal';
 import LoadingModal from '../shared/modals/LoadingModal';
+import Pagination from '../shared/Pagination/index';
 import { fetchUsers, deleteUser } from '../../actions/userActions';
 import { updateUser } from '../../actions';
 
@@ -15,7 +16,8 @@ class UserPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isModalOpen: false
+      isModalOpen: false,
+      perPage: 12
     };
 
     this.userEditData = {};
@@ -28,7 +30,16 @@ class UserPage extends Component {
 
   componentDidMount() {
     const { dispatch } = this.props;
-    dispatch(fetchUsers());
+    const { page, perPage } = this.state;
+
+    dispatch(
+      fetchUsers({
+        params: {
+          offset: page,
+          limit: perPage
+        }
+      })
+    );
   }
 
   handleOpenModal(user) {
@@ -55,11 +66,26 @@ class UserPage extends Component {
     dispatch(updateUser({ id, data }));
   }
 
+  handlePaginationBtnClick = (event) => {
+    const page = event.selected;
+    const { perPage: limit } = this.state;
+    const { dispatch } = this.props;
+    const offset = limit * page;
+
+    dispatch(fetchUsers({ params: { offset, limit } }));
+  };
+
   render() {
-    const { isModalOpen } = this.state;
-    const { loading, users, auth } = this.props;
+    const { isModalOpen, perPage } = this.state;
+    const {
+      loading,
+      users,
+      pagination: { total: totalUsers = 0, offset = 0 } = {},
+      auth
+    } = this.props;
 
     const _notAuthUser = users.filter((user) => user._id !== auth.user._id);
+    const pages = Math.ceil(totalUsers / perPage);
 
     return (
       <>
@@ -106,6 +132,7 @@ class UserPage extends Component {
             <table className='table-auto w-full'>
               <thead>
                 <tr className='text-left bg-gray-200 text-gray-600 uppercase text-sm leading-normal'>
+                  <th className='py-3 px-6'>sr. no</th>
                   <th className='py-3 px-6'>id</th>
                   <th className='py-3 px-6'>name</th>
                   <th className='py-3 px-6'>email</th>
@@ -114,12 +141,13 @@ class UserPage extends Component {
                 </tr>
               </thead>
               <tbody>
-                {_notAuthUser.map((user) => (
+                {_notAuthUser.map((user, idx) => (
                   <tr
                     key={uniqid()}
                     className='border-b border-gray-200 bg-gray-50 hover:bg-gray-100'
                     data-id={user._id}
                   >
+                    <td className='py-3 px-6'>{idx + offset + 1}</td>
                     <td className='py-3 px-6'>{user._id}</td>
                     <td className='py-3 px-6'>{`${user.first_name} ${user.last_name}`}</td>
                     <td className='py-3 px-6'>{user.email}</td>
@@ -196,6 +224,13 @@ class UserPage extends Component {
                 ))}
               </tbody>
             </table>
+            <div className='pagination-wrap flex justify-end mt-4'>
+              <Pagination
+                pageCount={pages}
+                onPageChange={this.handlePaginationBtnClick}
+                marginPagesDisplayed={1}
+              />
+            </div>
           </div>
         </section>
       </>
@@ -206,6 +241,7 @@ class UserPage extends Component {
 const mapStateToProps = (state) => ({
   auth: state.auth,
   users: state.user.users,
+  pagination: state.user.pagination,
   loading: state.user.loading,
   apiErrors: state.user.errors
 });

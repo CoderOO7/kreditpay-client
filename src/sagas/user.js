@@ -19,13 +19,12 @@ import { apiUsers } from '../services/api';
 import { callWrapperSaga } from '../utils/saga';
 import { actionTypes } from '../common/constants';
 
-export function* fetchUsers() {
+export function* fetchUsers({ payload: { params = {} } = {} }) {
   yield put(fetchUsersRequest());
   try {
-    const response = yield callWrapperSaga(apiUsers.getAll);
-    const users = response.data;
-
-    yield put(fetchUsersSuccess({ data: users }));
+    const response = yield callWrapperSaga(apiUsers.getAll, params);
+    const { data: users, pagination } = response;
+    yield put(fetchUsersSuccess({ data: users, pagination }));
   } catch (errors) {
     window.console.error(errors);
     yield put(fetchUsersFailure({ errors }));
