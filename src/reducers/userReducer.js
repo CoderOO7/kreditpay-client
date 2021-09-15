@@ -23,7 +23,8 @@ export default function (state = initialState, { type, payload }) {
         ...state,
         loading: false,
         errors: [],
-        users: payload.data
+        users: payload.data,
+        pagination: payload.pagination
       };
 
     case actionTypes.UPDATE_USER_SUCCESS:

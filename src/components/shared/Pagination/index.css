@@ -1,0 +1,15 @@
+.pagination {
+  @apply flex;
+}
+
+.page__link {
+  @apply bg-white border-gray-300 text-gray-500 hover:bg-gray-50 hidden md:inline-flex relative items-center px-4 py-2 border text-sm font-medium;
+}
+
+.page__link--active {
+  @apply bg-indigo-50 border-indigo-500 text-indigo-600;
+}
+
+.page__link[aria-disabled='true'] {
+  @apply opacity-60 cursor-not-allowed;
+}

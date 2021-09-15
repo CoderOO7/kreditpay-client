@@ -3,7 +3,7 @@ import { apiProvider } from './provider';
 export default class ApiCore {
   constructor(options) {
     if (options.getAll) {
-      this.getAll = () => apiProvider.getAll(options.resource);
+      this.getAll = (params) => apiProvider.getAll(options.resource, params);
     }
 
     if (options.getSingle) {

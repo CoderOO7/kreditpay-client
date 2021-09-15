@@ -15,10 +15,11 @@ const getSingle = (resource, id) => {
     .catch(handleError);
 };
 
-const getAll = (resource) =>
+const getAll = (resource, params) =>
   axios({
     method: 'get',
-    url: `${resource}`
+    url: `${resource}`,
+    params
   })
     .then(handleResponse)
     .catch(handleError);
