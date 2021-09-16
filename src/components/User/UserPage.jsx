@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import uniqid from 'uniqid';
+import { debounce } from 'lodash';
 
 import UserEditModal from '../modals/UserEditModal';
 import LoadingModal from '../shared/modals/LoadingModal';
@@ -17,10 +18,12 @@ class UserPage extends Component {
     super(props);
     this.state = {
       isModalOpen: false,
-      perPage: 12
+      perPage: 12,
+      activePageIdx: 0
     };
 
     this.userEditData = {};
+    this._debouncedHandlePerPage = null;
     this.handleUserDeletion = this.handleUserDeletion.bind(this);
     this.handleCloseModal = this.handleCloseModal.bind(this);
     this.handleOpenModal = this.handleOpenModal.bind(this);
@@ -29,17 +32,19 @@ class UserPage extends Component {
   }
 
   componentDidMount() {
-    const { dispatch } = this.props;
-    const { page, perPage } = this.state;
+    this._fetchUsers();
+    this._debouncedHandlePerPage = debounce(this.handlePerPageChange, 500);
+  }
 
-    dispatch(
-      fetchUsers({
-        params: {
-          offset: page,
-          limit: perPage
-        }
-      })
-    );
+  componentDidUpdate(oldProps, oldState) {
+    const { perPage, activePageIdx } = this.state;
+    if (oldState.perPage !== perPage || oldState.activePageIdx !== activePageIdx) {
+      this._fetchUsers();
+    }
+  }
+
+  componentWillUnmount() {
+    this._debouncedHandlePerPage = null;
   }
 
   handleOpenModal(user) {
@@ -66,17 +71,44 @@ class UserPage extends Component {
     dispatch(updateUser({ id, data }));
   }
 
-  handlePaginationBtnClick = (event) => {
+  _handlePaginationBtnClick = (event) => {
     const page = event.selected;
-    const { perPage: limit } = this.state;
-    const { dispatch } = this.props;
-    const offset = limit * page;
+    this.setState({ activePageIdx: page });
+  };
 
-    dispatch(fetchUsers({ params: { offset, limit } }));
+  handlePerPageChange = ({ target }) => {
+    const max = Number(target.max);
+    const min = Number(target.min);
+    const value = Number(target.value);
+    const { perPage } = this.state;
+
+    if (value === perPage) return;
+    if (!value || value < min) {
+      target.value = min;
+    } else if (value > max) {
+      target.value = max;
+    } else {
+      this.setState({ perPage: target.value, activePageIdx: 0 });
+    }
+  };
+
+  _fetchUsers = () => {
+    const { dispatch } = this.props;
+    const { activePageIdx, perPage } = this.state;
+    const limit = perPage;
+    const offset = activePageIdx * limit;
+    dispatch(
+      fetchUsers({
+        params: {
+          offset,
+          limit
+        }
+      })
+    );
   };
 
   render() {
-    const { isModalOpen, perPage } = this.state;
+    const { isModalOpen, perPage, activePageIdx } = this.state;
     const {
       loading,
       users,
@@ -129,7 +161,7 @@ class UserPage extends Component {
             </div>
           </header>
           <div className='users__content px-2 relative'>
-            <table className='table-auto w-full'>
+            <table className='table-auto w-full min-w-max'>
               <thead>
                 <tr className='text-left bg-gray-200 text-gray-600 uppercase text-sm leading-normal'>
                   <th className='py-3 px-6'>sr. no</th>
@@ -224,11 +256,26 @@ class UserPage extends Component {
                 ))}
               </tbody>
             </table>
-            <div className='pagination-wrap flex justify-end mt-4'>
+            <div className='pagination-wrap flex justify-end mt-4 gap-4'>
+              <div className='page-size flex gap-4 text-center'>
+                <span className='page-size__title flex align-bottom items-center font-md'>
+                  Rows Per Page
+                </span>
+                <input
+                  type='number'
+                  min={10}
+                  step={10}
+                  max={100}
+                  defaultValue={perPage}
+                  onChange={this._debouncedHandlePerPage}
+                  className='page-size__input w-20 border-0 border-b border-blue-500 outline-none bg-transparent'
+                />
+              </div>
               <Pagination
                 pageCount={pages}
-                onPageChange={this.handlePaginationBtnClick}
+                onPageChange={this._handlePaginationBtnClick}
                 marginPagesDisplayed={1}
+                forcePage={activePageIdx}
               />
             </div>
           </div>
