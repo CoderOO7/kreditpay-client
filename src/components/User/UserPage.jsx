@@ -81,15 +81,16 @@ class UserPage extends Component {
     const min = Number(target.min);
     const value = Number(target.value);
     const { perPage } = this.state;
+    const { pagination: { total = 0 } = {} } = this.props;
 
-    if (value === perPage) return;
     if (!value || value < min) {
       target.value = min;
     } else if (value > max) {
       target.value = max;
-    } else {
-      this.setState({ perPage: target.value, activePageIdx: 0 });
+    } else if (value > total || value === perPage) {
+      return;
     }
+    this.setState({ perPage: target.value, activePageIdx: 0 });
   };
 
   _fetchUsers = () => {
@@ -111,12 +112,10 @@ class UserPage extends Component {
     const { isModalOpen, perPage, activePageIdx } = this.state;
     const {
       loading,
-      users,
-      pagination: { total: totalUsers = 0, offset = 0 } = {},
-      auth
+      users = [],
+      pagination: { total: totalUsers = 0, offset = 0 } = {}
     } = this.props;
 
-    const _notAuthUser = users.filter((user) => user._id !== auth.user._id);
     const pages = Math.ceil(totalUsers / perPage);
 
     return (
@@ -161,7 +160,7 @@ class UserPage extends Component {
             </div>
           </header>
           <div className='users__content px-2 relative'>
-            <table className='table-auto w-full min-w-max'>
+            <table className='min-w-full divide-y divide-gray-200'>
               <thead>
                 <tr className='text-left bg-gray-200 text-gray-600 uppercase text-sm leading-normal'>
                   <th className='py-3 px-6'>sr. no</th>
@@ -173,7 +172,7 @@ class UserPage extends Component {
                 </tr>
               </thead>
               <tbody>
-                {_notAuthUser.map((user, idx) => (
+                {users.map((user, idx) => (
                   <tr
                     key={uniqid()}
                     className='border-b border-gray-200 bg-gray-50 hover:bg-gray-100'
@@ -186,7 +185,7 @@ class UserPage extends Component {
                     <td className='py-3 px-6'>{user.role}</td>
                     <td className='py-3 px-6'>
                       <div className='flex gap-2'>
-                        {/*  <button
+                        {/* <button
                           type='button'
                           className='w-4 transform hover:text-gray-800 hover:scale-110'
                         >
@@ -256,27 +255,34 @@ class UserPage extends Component {
                 ))}
               </tbody>
             </table>
-            <div className='pagination-wrap flex justify-end mt-4 gap-4'>
-              <div className='page-size flex gap-4 text-center'>
-                <span className='page-size__title flex align-bottom items-center font-md'>
-                  Rows Per Page
-                </span>
-                <input
-                  type='number'
-                  min={10}
-                  step={10}
-                  max={100}
-                  defaultValue={perPage}
-                  onChange={this._debouncedHandlePerPage}
-                  className='page-size__input w-20 border-0 border-b border-blue-500 outline-none bg-transparent'
+            <div className='pagination-wrap flex justify-between items-center mt-4'>
+              <div className='pagination-wrap__left'>
+                <span className='page-range text-gray-500'>{`Showing ${offset + 1} to ${
+                  offset + users.length
+                } of ${totalUsers} results`}</span>
+              </div>
+              <div className='pagination-wrap__right flex gap-4'>
+                <div className='page-size flex gap-2 text-center'>
+                  <span className='page-size__title flex align-bottom items-center text-gray-500 font-md'>
+                    Rows Per Page
+                  </span>
+                  <input
+                    type='number'
+                    min={10}
+                    step={10}
+                    max={100}
+                    defaultValue={perPage}
+                    onChange={this._debouncedHandlePerPage}
+                    className='page-size__input w-14 text-center border-0 border-b border-blue-500 outline-none bg-transparent'
+                  />
+                </div>
+                <Pagination
+                  pageCount={pages}
+                  onPageChange={this._handlePaginationBtnClick}
+                  marginPagesDisplayed={1}
+                  forcePage={activePageIdx}
                 />
               </div>
-              <Pagination
-                pageCount={pages}
-                onPageChange={this._handlePaginationBtnClick}
-                marginPagesDisplayed={1}
-                forcePage={activePageIdx}
-              />
             </div>
           </div>
         </section>
