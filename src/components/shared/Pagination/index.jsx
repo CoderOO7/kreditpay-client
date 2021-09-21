@@ -3,8 +3,8 @@ import ReactPaginate from 'react-paginate';
 import './index.css';
 
 function Pagination({
-  previousLabel = 'prev',
-  nextLabel = 'next',
+  previousLabel = '<',
+  nextLabel = '>',
   breakLabel = '...',
   breakClassName = 'page page--break-me',
   breakLinkClassName = 'page__link page__link--beak-me',

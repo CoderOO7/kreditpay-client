@@ -33,7 +33,7 @@ class UserPage extends Component {
 
   componentDidMount() {
     this._fetchUsers();
-    this._debouncedHandlePerPage = debounce(this.handlePerPageChange, 500);
+    this._debouncedHandlePerPage = debounce(this.handlePerPageChange, 600);
   }
 
   componentDidUpdate(oldProps, oldState) {
@@ -81,13 +81,14 @@ class UserPage extends Component {
     const min = Number(target.min);
     const value = Number(target.value);
     const { perPage } = this.state;
-    const { pagination: { total = 0 } = {} } = this.props;
+    const { pagination: { total = 0, offset = 0, limit = 0 } = {} } = this.props;
+    const itemsLeft = offset + limit;
 
     if (!value || value < min) {
       target.value = min;
     } else if (value > max) {
       target.value = max;
-    } else if (value > total || value === perPage) {
+    } else if ((value >= total && itemsLeft >= total) || value === perPage) {
       return;
     }
     this.setState({ perPage: target.value, activePageIdx: 0 });
@@ -117,7 +118,6 @@ class UserPage extends Component {
     } = this.props;
 
     const pages = Math.ceil(totalUsers / perPage);
-
     return (
       <>
         {isModalOpen && (
@@ -160,32 +160,36 @@ class UserPage extends Component {
             </div>
           </header>
           <div className='users__content px-2 relative'>
-            <table className='min-w-full divide-y divide-gray-200'>
-              <thead>
-                <tr className='text-left bg-gray-200 text-gray-600 uppercase text-sm leading-normal'>
-                  <th className='py-3 px-6'>sr. no</th>
-                  <th className='py-3 px-6'>id</th>
-                  <th className='py-3 px-6'>name</th>
-                  <th className='py-3 px-6'>email</th>
-                  <th className='py-3 px-6'>type</th>
-                  <th className='py-3 px-6'>actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {users.map((user, idx) => (
-                  <tr
-                    key={uniqid()}
-                    className='border-b border-gray-200 bg-gray-50 hover:bg-gray-100'
-                    data-id={user._id}
-                  >
-                    <td className='py-3 px-6'>{idx + offset + 1}</td>
-                    <td className='py-3 px-6'>{user._id}</td>
-                    <td className='py-3 px-6'>{`${user.first_name} ${user.last_name}`}</td>
-                    <td className='py-3 px-6'>{user.email}</td>
-                    <td className='py-3 px-6'>{user.role}</td>
-                    <td className='py-3 px-6'>
-                      <div className='flex gap-2'>
-                        {/* <button
+            <div
+              className='table-wrap overflow-x-auto overflow-y-auto'
+              style={{ height: '70vh' }}
+            >
+              <table className='min-w-full divide-y divide-gray-200'>
+                <thead>
+                  <tr className='text-left bg-gray-200 text-gray-600 uppercase text-sm leading-normal'>
+                    <th className='py-3 px-6'>sr. no</th>
+                    <th className='py-3 px-6'>id</th>
+                    <th className='py-3 px-6'>name</th>
+                    <th className='py-3 px-6'>email</th>
+                    <th className='py-3 px-6'>type</th>
+                    <th className='py-3 px-6'>actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {users.map((user, idx) => (
+                    <tr
+                      key={uniqid()}
+                      className='border-b border-gray-200 bg-gray-50 hover:bg-gray-100'
+                      data-id={user._id}
+                    >
+                      <td className='py-3 px-6'>{idx + offset + 1}</td>
+                      <td className='py-3 px-6'>{user._id}</td>
+                      <td className='py-3 px-6'>{`${user.first_name} ${user.last_name}`}</td>
+                      <td className='py-3 px-6'>{user.email}</td>
+                      <td className='py-3 px-6'>{user.role}</td>
+                      <td className='py-3 px-6'>
+                        <div className='flex gap-2'>
+                          {/* <button
                           type='button'
                           className='w-4 transform hover:text-gray-800 hover:scale-110'
                         >
@@ -209,52 +213,53 @@ class UserPage extends Component {
                             />
                           </svg>
                         </button> */}
-                        <button
-                          type='button'
-                          className='w-4 transform hover:text-gray-800 hover:scale-110'
-                          onClick={this.handleOpenModal.bind(null, user)}
-                          title='Edit'
-                        >
-                          <svg
-                            xmlns='http://www.w3.org/2000/svg'
-                            fill='none'
-                            viewBox='0 0 24 24'
-                            stroke='currentColor'
+                          <button
+                            type='button'
+                            className='w-4 transform hover:text-gray-800 hover:scale-110'
+                            onClick={this.handleOpenModal.bind(null, user)}
+                            title='Edit'
                           >
-                            <path
-                              strokeLinecap='round'
-                              strokeLinejoin='round'
-                              strokeWidth={2}
-                              d='M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z'
-                            />
-                          </svg>
-                        </button>
-                        <button
-                          type='button'
-                          className='w-4 transform hover:text-red-800 hover:scale-110'
-                          onClick={this.handleUserDeletion.bind(null, user._id)}
-                          title='Delete'
-                        >
-                          <svg
-                            xmlns='http://www.w3.org/2000/svg'
-                            fill='none'
-                            viewBox='0 0 24 24'
-                            stroke='currentColor'
+                            <svg
+                              xmlns='http://www.w3.org/2000/svg'
+                              fill='none'
+                              viewBox='0 0 24 24'
+                              stroke='currentColor'
+                            >
+                              <path
+                                strokeLinecap='round'
+                                strokeLinejoin='round'
+                                strokeWidth={2}
+                                d='M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z'
+                              />
+                            </svg>
+                          </button>
+                          <button
+                            type='button'
+                            className='w-4 transform hover:text-red-800 hover:scale-110'
+                            onClick={this.handleUserDeletion.bind(null, user._id)}
+                            title='Delete'
                           >
-                            <path
-                              strokeLinecap='round'
-                              strokeLinejoin='round'
-                              strokeWidth={2}
-                              d='M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16'
-                            />
-                          </svg>
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+                            <svg
+                              xmlns='http://www.w3.org/2000/svg'
+                              fill='none'
+                              viewBox='0 0 24 24'
+                              stroke='currentColor'
+                            >
+                              <path
+                                strokeLinecap='round'
+                                strokeLinejoin='round'
+                                strokeWidth={2}
+                                d='M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16'
+                              />
+                            </svg>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
             <div className='pagination-wrap flex justify-between items-center mt-4'>
               <div className='pagination-wrap__left'>
                 <span className='page-range text-gray-500'>{`Showing ${offset + 1} to ${
