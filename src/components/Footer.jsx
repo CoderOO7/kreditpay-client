@@ -1,14 +1,18 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useInput } from '../hooks';
 import { createContactus } from '../actions';
 import EmailSvg from '../assets/icons/email-icon.svg';
 import PhoneSvg from '../assets/icons/phone-icon.svg';
+import { bindPromiseWithDispatch } from '../utils/redux';
+import Button from './shared/Button';
+import { toast } from 'react-toastify';
 
 const Footer = () => {
   const [name, bindName, resetName] = useInput('');
   const [email, bindEmail, resetEmail] = useInput('');
   const [message, bindMessage, resetMessage] = useInput('');
+  const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
 
   const _reset = useCallback(() => {
@@ -18,11 +22,18 @@ const Footer = () => {
   });
 
   const _handleContactFormSubmit = useCallback(
-    ({ name, email, message }, evt) => {
+    async ({ name, email, message }, evt) => {
       if (evt) evt.preventDefault();
       const payloads = { name, email, message };
-      dispatch(createContactus(payloads));
-      _reset();
+      setIsLoading(true);
+      const { success } = await bindPromiseWithDispatch(dispatch)(createContactus)(
+        payloads
+      );
+      if (success) {
+        _reset();
+        toast.success('Your query is submitted successfully, out team will reach to you');
+      }
+      setIsLoading(false);
     },
     [dispatch]
   );
@@ -65,12 +76,13 @@ const Footer = () => {
                 placeholder='Your message'
                 required
               />
-              <button
+              <Button
+                isLoading={isLoading}
                 type='submit'
                 className='bg-blue-700 text-white w-24 h-10 rounded-md hover:bg-blue-600'
               >
                 Submit
-              </button>
+              </Button>
             </form>
           </div>
           <div className='footer__site-map space-y-4'>
